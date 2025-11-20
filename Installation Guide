@@ -1,0 +1,207 @@
+Installation Guide 
+--------------------------------------------
+Here is the **clean, clear, perfectly formatted step-by-step guide** for installing **WordPress using XAMPP**, based on the detailed explanation you provided.
+This is written in a **proper practical-friendly format**, so you can directly use it in your journal or assignment.
+
+---
+
+# ⭐ **STEP-BY-STEP GUIDE TO INSTALL WORDPRESS USING XAMPP**
+
+*(Complete Practical Explanation)*
+
+---
+
+# 🔵 **PHASE 1: Preparation & Downloading Required Tools**
+
+## **1. Download WordPress**
+
+1. Open any web browser (Chrome / Edge).
+2. Search for **“WordPress download”**.
+3. Click the official website:
+   **download.wordpress.org**
+4. Click the button: **Download WordPress**
+   → This will download a ZIP file.
+
+---
+
+## **2. Download XAMPP**
+
+1. Open a new browser tab.
+2. Search **“XAMPP download”**.
+3. Open the official website (apachefriends.org).
+4. Choose the Windows version (e.g., **XAMPP 8.2.2**).
+5. Click **Download** and wait until the file finishes downloading.
+
+---
+
+# 🔵 **PHASE 2: Install XAMPP & Extract WordPress**
+
+## **3. Install XAMPP**
+
+1. Go to your **Downloads** folder.
+2. Double-click the downloaded **XAMPP installer**.
+3. Click **Yes** for administrative permissions.
+4. In the Setup Wizard → click **Next**.
+5. Leave all components checked → click **Next**.
+6. Accept the default installation folder (e.g., `C:\xampp`).
+7. Click **Next → Next** to begin installation.
+8. Wait for installation to complete.
+
+---
+
+## **4. Extract WordPress**
+
+1. While XAMPP is installing, go to the **Downloads** folder again.
+2. Right-click the downloaded WordPress .zip file.
+3. Select **Extract All / Extract Here**.
+4. A folder named **wordpress** will be created.
+
+---
+
+## **5. Open XAMPP Control Panel**
+
+1. After installation finishes, make sure
+   ✔ *"Do you want to start XAMPP Control Panel"* is checked.
+2. Click **Finish**.
+3. XAMPP Control Panel will open.
+   (If not → open from Start Menu)
+
+---
+
+## **6. Start Required Services**
+
+On the XAMPP control panel:
+
+* Click **Start** next to **Apache**
+* Click **Start** next to **MySQL**
+
+Both services should turn **green** (running).
+
+---
+
+# 🔵 **PHASE 3: Database Creation & WordPress File Setup**
+
+## **7. Open phpMyAdmin**
+
+1. In XAMPP Control Panel → click **Admin** next to MySQL.
+2. This opens **phpMyAdmin** in your browser.
+
+---
+
+## **8. Create a Database**
+
+1. On the left menu → click **New**.
+2. Under **Database name**, type:
+   **wordpress**
+   *(Use small ‘w’)*
+3. Click **Create**.
+
+---
+
+## **9. Move WordPress Folder**
+
+1. Go to the extracted **wordpress** folder (Downloads).
+2. Open it → inside you will see another folder also named **wordpress**.
+3. Right-click → **Cut**.
+
+---
+
+## **10. Paste Into htdocs**
+
+1. Go to:
+   **C: → xampp → htdocs**
+2. Right-click → **Paste**.
+
+Optional:
+You can rename the folder (e.g., `mysite`)
+but use small letters only.
+
+---
+
+# 🔵 **PHASE 4: WordPress Configuration**
+
+## **11. Run WordPress Setup Script**
+
+1. Open your browser.
+2. Type:
+   **localhost/wordpress**
+   *(or the folder name you used)*
+3. Press Enter.
+
+---
+
+## **12. Choose Language**
+
+Select any language (e.g., English).
+Click **Continue** → Click **Let’s go**.
+
+---
+
+## **13. Enter Database Credentials**
+
+Fill in:
+
+| Field             | Value           |
+| ----------------- | --------------- |
+| **Database Name** | wordpress       |
+| **Username**      | root            |
+| **Password**      | *(leave blank)* |
+| **Database Host** | localhost       |
+| **Table Prefix**  | wp_ (default)   |
+
+Click **Submit**.
+
+---
+
+## **14. Run Installation**
+
+Click **Run the installation**.
+
+---
+
+## **15. Set Up Your Website**
+
+Fill in the details:
+
+* **Site Title:** (e.g., Geeky Script)
+* **Username:** root
+* **Password:** root
+  (Confirm weak password if required)
+* **Your Email:** any email (can be fake)
+
+Click **Install WordPress**.
+
+---
+
+# 🔵 **PHASE 5: Final Access**
+
+## **16. Login**
+
+1. Click **Login** after installation.
+2. Enter your credentials:
+
+   * **Username:** root
+   * **Password:** root
+3. Click **Log In**.
+
+---
+
+## **17. View Your Website**
+
+1. After logging in, you will be on the **Dashboard**.
+2. Move your cursor to the top-left site title.
+3. Click **Visit Site**.
+4. Your WordPress website is now live on **localhost**!
+
+---
+
+# 🎉 **Your WordPress installation is complete!**
+
+If you want, I can also provide:
+✔ Full practical journal format (Aim, Theory, Steps, Output, Conclusion)
+✔ Screenshots (simulated)
+✔ A PDF for submission
+✔ A WordPress project scenario for your CC practical
+
+Just tell me: **"Give me the full journal format"** or **"Make it in PDF"**.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
