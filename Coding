@@ -1,0 +1,203 @@
+(CC7.1 )
+Demonstrate the use of map and reduce tasks  
+1. Write a Python program to perform word count in a text file. 
+---------------------------------------------------------------
+from functools import reduce
+
+documents = [
+    "apple banana apple is an apple",
+    "orange apple banana",
+    "banana apple apple",
+    "grape orange apple"
+]
+
+target_word = "apple"
+
+def map_task(document):
+    words = document.split()
+    return [1 for word in words if word == target_word]
+
+def reduce_task(mapped_counts):
+    return reduce(lambda x, y: x + y, mapped_counts)
+
+mapped = [map_task(doc) for doc in documents]
+
+flattened = [count for sublist in mapped for count in sublist]
+
+total_count = reduce_task(flattened)
+
+print(f"Total occurrences of '{target_word}': {total_count}")  Output:------>Total occurrences of 'apple': 7
+--------------------------------------------------------------
+Conclusion :- 
+
+The program successfully demonstrates the MapReduce concept by counting 
+word occurrences across multiple documents. It efficiently maps and reduces data
+to calculate the total occurrences of the target word “apple.” 
+
+-----------------------------------------------------------------------------
+(CC7.2)
+2.Demonstration of map() to calculate squares of numbers.
+Write a Python program to calculate the square of each number in a list using map(). 
+-----------------------------------------------------------------------------------
+# Input list
+numbers = [1, 2, 3, 4, 5]
+
+# Using map() to calculate squares
+squares = list(map(lambda x: x * x, numbers))
+
+# Display output
+print("Original numbers:", numbers)
+print("Squares:", squares)
+
+# Output:
+Original numbers: [1, 2, 3, 4, 5]
+Squares: [1, 4, 9, 16, 25]
+------------------------------------------------------------------------------------
+(cc7.3)
+Demonstrate the use of map and reduce tasks 
+Write a Python program to calculate the cube of each number in a list using map().
+------------------------------------------------------------------------------------
+
+# Input list
+numbers = [1, 2, 3, 4, 5]
+
+# Using map() to calculate cubes
+cubes = list(map(lambda x: x ** 3, numbers))
+
+# Display output
+print("Original numbers:", numbers)
+print("Cubes:", cubes)
+
+# Output:
+Original numbers: [1, 2, 3, 4, 5]
+Cubes: [1, 8, 27, 64, 125]
+-----------------------------------------------------------------------------------
+
+(cc 5-1)
+Implement and configure Google App Engine to deploy Python Program application. 
+Write a Python program to count the number of vowels and consonants in a string.
+-----------------------------------------------------------
+# Python program to count vowels and consonants in a string
+
+# Input from user
+text = input("Enter a string: ")
+
+vowels = "aeiouAEIOU"
+vowel_count = 0
+consonant_count = 0
+
+# Loop through each character
+for ch in text:
+    if ch.isalpha():  # Check if character is a letter
+        if ch in vowels:
+            vowel_count += 1
+        else:
+            consonant_count += 1
+
+# Display the result
+print("Vowels:", vowel_count)
+print("Consonants:", consonant_count)
+
+Sample input:
+Enter a string: hello world
+sample Output:
+Vowels: 3
+Consonants: 7
+-----------------------------------------------------------------------------------------
+
+(cc 5-2)
+Implement and configure Google App Engine to deploy Python Program application. 
+Write a Python program to find the largest among three numbers.
+--------------------------------------------------------------
+# Python program to find the largest among three numbers
+
+# Taking input from the user
+a = float(input("Enter first number: "))
+b = float(input("Enter second number: "))
+c = float(input("Enter third number: "))
+
+# Checking which number is largest
+if a >= b and a >= c:
+    largest = a
+elif b >= a and b >= c:
+    largest = b
+else:
+    largest = c
+
+# Display the result
+print("The largest number is:", largest)
+
+Sampple input:
+Enter first number: 10
+Enter second number: 25
+Enter third number: 15
+
+sample output:
+The largest number is: 25
+---------------------------------------------------------------------------------------------
+
+cc6(1)
+Installation and configuration of virtual machine with guest OS. 
+Write a Python program to find the factorial of a given number. 
+ 
+CC6(2) 
+Installation and configuration of virtual machine with guest OS. 
+Write a Python program to check whether a number is prime or not. 
+ 
+CC6(3) 
+Installation and configuration of virtual machine with guest OS. 
+Write a Python program to generate the Fibonacci series up to n terms.
+
+----------------------------------------------------------------
+# Program to find factorial of a number
+
+num = int(input("Enter a number: "))
+fact = 1
+
+for i in range(1, num + 1):
+    fact *= i
+
+print("Factorial of", num, "is:", fact)
+
+Sample input:
+Enter a number: 5
+
+Output:
+Factorial of 5 is: 120
+----------------------------------------------------------------
+
+# Program to check whether a number is prime or not
+
+num = int(input("Enter a number: "))
+
+if num < 2:
+    print("Not a prime number")
+else:
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            print("Not a prime number")
+            break
+    else:
+        print("Prime number")
+
+Enter a number: 11
+Prime number
+-----------------------------------------------------------------
+
+# Program to generate Fibonacci series up to n terms
+
+n = int(input("Enter number of terms: "))
+
+a, b = 0, 1
+
+for i in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+
+Enter number of terms: 7
+0 1 1 2 3 5 8
+-----------------------------------------------------------------
+
+
+
+
