@@ -1,0 +1,408 @@
+Practical 1: 
+Software Required: SWI-Prolog
+Title :  Study of PROLOG. Write the following programs using PROLOG.
+--------------------------------------------------------------------
+Codes: 
+      likes(ram, mango).
+      girl(seema).
+      likes(bill, cindy).
+      red(rose).
+      own(john).
+
+| Query                   | Output                                      |
+| ----------------------- | ------------------------------------------- |
+| `?- likes(ram, mango).` | `true.`                                     |
+| `?- likes(ram, apple).` | `false.`                                    |
+| `?- likes(bill, X).`    | `X = cindy.`                                |
+| `?- girl(seema).`       | `true.`                                     |
+| `?- red(X).`            | `X = rose.`                                 |
+| `?- own(john).`         | `true.`                                     |
+| `?- likes(X, mango).`   | `X = ram.`                                  |
+| `?- likes(X, Y).`       | `X = ram, Y = mango ; X = bill, Y = cindy.` |
+
+PROGRAM – 2: Facts, Rules & Temperature Conversion:
+
+    % Facts
+    male(john).
+    female(lisa).
+    parent(lisa, john).
+    
+    % Rules
+    father(X, Y) :- male(X), parent(X, Y).
+    mother(X, Y) :- female(X), parent(X, Y).
+    
+    % Celsius to Fahrenheit conversion
+    c_to_f(C, F) :- F is C * 9 / 5 + 32.
+    
+    % Check if temperature is freezing
+    freezing(F) :- F =< 32.
+--------------------------------
+Check parent relationships:
+?- father(john, john).
+false.
+
+?- mother(lisa, john).
+true.
+---------------------------------
+Convert Celsius to Fahrenheit
+?- c_to_f(0, F).
+F = 32.
+
+?- c_to_f(25, F).
+F = 77.
+---------------------------------
+Check freezing temperature
+?- freezing(30).
+true.
+
+?- freezing(40).
+false.
+---------------------------------
+
+Conclusion:
+This Prolog program converts temperatures from Celsius to Fahrenheit and 
+checks if a given Fahrenheit temperature is at or below the freezing point. 
+It demonstrates basic arithmetic operations and conditional checks in Prolog.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 2:
+Software Required: SWI-Prolog
+Title: To write a PROLOG program to solve the 8-Queens Problem using constraint logic programming.
+-------------------------------------------------------------------------------------------------
+code: 
+
+    :- use_module(library(clpfd)).
+    
+    % Main predicate: Solution is a list of 8 numbers representing queen rows for columns 1..8
+    eight_queens(Solution) :-
+        length(Solution, 8),
+        Solution ins 1..8,          % Queens can be placed in rows 1 to 8
+        safe_queens(Solution),
+        labeling([], Solution).     % Find valid solutions
+    
+    % Check that all queens are safe
+    safe_queens([]).
+    safe_queens([Q|Qs]) :-
+        safe_queens(Qs),
+        no_attack(Q, Qs, 1).
+    
+    % Ensure queens do not attack each other diagonally
+    no_attack(_, [], _).
+    no_attack(Q, [Q1|Qs], D) :-
+        Q #\= Q1,                  % Not in the same row
+        abs(Q - Q1) #\= D,         % Not in the same diagonal
+        D1 #= D + 1,
+        no_attack(Q, Qs, D1).
+------------------------------------------
+
+    Query:
+    ?- eight_queens(Solution).
+-------------------------------------------
+    Possible Output:
+    Solution = [1, 5, 8, 6, 3, 7, 2, 4] ;
+    Solution = [1, 6, 8, 3, 7, 4, 2, 5] ;
+    Solution = [1, 7, 4, 6, 8, 2, 5, 3] ;
+    ...
+    (many more solutions)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 3:
+Software Required: SWI-Prolog
+Title : Solve any problem using depth first search. 	
+------------------------------------------------------------------------------------
+Code: 
+      % Define the graph edges
+      edge(a, b).
+      edge(a, c).
+      edge(b, d).
+      edge(c, e).
+      edge(d, f).
+      edge(e, f).
+      edge(f, g).
+      
+      % DFS main predicate: find a path from Start to Goal
+      dfs(Start, Goal, Path) :-
+          dfs_helper(Start, Goal, [Start], Path).
+      
+      % Helper predicate:
+      % Current node, Goal node, Visited list, Final Path
+      dfs_helper(Goal, Goal, Visited, Path) :-
+          reverse(Visited, Path).
+      
+      dfs_helper(Current, Goal, Visited, Path) :-
+          edge(Current, Next),
+          \+ member(Next, Visited),         % avoid revisiting nodes
+          dfs_helper(Next, Goal, [Next|Visited], Path).
+---------------------------------------------------------------------
+
+        Query:
+        ?- dfs(a, g, Path).
+-------------------------------------------------------------------------
+        
+        ✅ Expected Output:
+        Path = [a, b, d, f, g] ;
+        Path = [a, c, e, f, g] ;
+        false.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 4:
+Software Required: SWI-Prolog
+Title: solve any problem using Best first search.
+-----------------------------------------------------------
+code: 
+      % ---------------------------------------
+      % Undirected graph (subset of Romania map)
+      % ---------------------------------------
+      edge(arad, sibiu, 140).
+      edge(sibiu, fagaras, 99).
+      edge(sibiu, rimnicu, 80).
+      edge(fagaras, bucharest, 211).
+      edge(rimnicu, pitesti, 97).
+      edge(pitesti, bucharest, 101).
+      
+      % Make edges undirected
+      adj(X, Y) :- edge(X, Y, _).
+      adj(X, Y) :- edge(Y, X, _).
+      
+      % ---------------------------------------
+      % Heuristic: straight-line distance to Bucharest
+      % ---------------------------------------
+      heuristic(arad, 366).
+      heuristic(sibiu, 253).
+      heuristic(fagaras, 176).
+      heuristic(rimnicu, 193).
+      heuristic(pitesti, 100).
+      heuristic(bucharest, 0).
+      
+      % ---------------------------------------
+      % Public API: Best First Search
+      % ---------------------------------------
+      best_first(Start, Goal, Path) :-
+          heuristic(Start, H0),
+          gbfs([H0-[Start]], Goal, RevPath, false),
+          reverse(RevPath, Path).
+      
+      best_first_debug(Start, Goal, Path) :-
+          heuristic(Start, H0),
+          gbfs([H0-[Start]], Goal, RevPath, true),
+          reverse(RevPath, Path).
+      
+      % ---------------------------------------
+      % Greedy Best-First core
+      % ---------------------------------------
+      gbfs([_H-[Goal|Rest] | _], Goal, [Goal|Rest], _) :- !.
+      
+      gbfs([_H-[Current|RestPath] | Open], Goal, Path, Debug) :-
+          ( Debug == true ->
+              format('Expanding: ~w~n', [Current]),
+              print_frontier([_H-[Current|RestPath] | Open])
+          ;   true ),
+          findall(H1-[Next,Current|RestPath],
+              ( adj(Current, Next),
+                \+ member(Next, [Current|RestPath]),
+                heuristic(Next, H1)
+              ),
+              Children),
+          append(Open, Children, Open1),
+          keysort(Open1, OpenSorted),
+          gbfs(OpenSorted, Goal, Path, Debug).
+      
+      print_frontier(Frontier) :-
+          findall((H,Head),
+              ( member(H-[Head|_], Frontier) ),
+              Pairs),
+          format('Frontier (H,Node): ~w~n~n', [Pairs]).
+------------------------------------------------------------------
+Queries:
+?- [best_first].
+O/p: true.
+-----------------------------------------------------------
+Run Best-First Search:
+?- best_first(arad, bucharest, Path).
+O/p: Path = [arad, sibiu, fagaras, bucharest].
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 5:
+Software Required: SWI-Prolog
+Title: Solve 8-puzzle problem using best first search.
+-----------------------------------------------------------
+code: 
+        % Goal state
+      goal([1,2,3,4,5,6,7,8,0]).
+      
+      % Heuristic: count of misplaced tiles
+      heuristic(State, H) :-
+          goal(Goal),
+          misplaced(State, Goal, H).
+      
+      misplaced([], [], 0).
+      misplaced([H1|T1], [H2|T2], Count) :-
+          misplaced(T1, T2, Rest),
+          (H1 \= 0, H1 \= H2 -> Count is Rest + 1 ; Count = Rest).
+      
+      % Move rules (example: move blank left)
+      move([X1,0,X3,X4,X5,X6,X7,X8,X9], [0,X1,X3,X4,X5,X6,X7,X8,X9]).
+      % Add other move rules for all directions...
+      
+      % Best-first search
+      best_first([[State|Path]|_], [State|Path]) :-
+          goal(State).
+      
+      best_first([Current|Rest], Solution) :-
+          Current = [State|_],
+          findall([NextState,State|Path],
+                  (move(State, NextState), \+ member(NextState, [State|Path])),
+                  NewPaths),
+          append(Rest, NewPaths, AllPaths),
+          sort_paths(AllPaths, Sorted),
+          best_first(Sorted, Solution).
+      
+      % Sort paths by heuristic
+      sort_paths(Paths, Sorted) :-
+          map_list_to_pairs(path_cost, Paths, Pairs),
+          keysort(Pairs, SortedPairs),
+          pairs_values(SortedPairs, Sorted).
+      
+      path_cost([State|_], Cost) :-
+          heuristic(State, Cost).
+-----------------------------------------------------------
+Query:
+?- best_first([[ [1,0,3,4,2,5,6,7,8] ]], Solution).
+----------------------------------------------------
+O/p: Solution = [[1,2,3,4,5,6,7,8,0], [1,0,3,4,2,5,6,7,8]].
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 6:
+Software Required: SWI-Prolog
+Title: Solve Robot (Traversal) Problem using means End Analysis
+-----------------------------------------------------------
+code: 
+      % Entry point
+      solve_mea((SX,SY), (GX,GY), Obst, (MaxX,MaxY), Path) :-
+          Start = pos(SX,SY),
+          Goal  = pos(GX,GY),
+          mea(Start, Goal, Obst, (MaxX,MaxY), [Start], RevPath),
+          reverse(RevPath, Path).
+      
+      % Goal reached
+      mea(Goal, Goal, _Obst, _Bds, Visited, Visited) :- !.
+      
+      % Expand current state using heuristic ordering
+      mea(Current, Goal, Obst, Bds, Visited, PathOut) :-
+          Current = pos(X,Y),
+          % Generate valid successors not yet visited
+          findall(Succ,
+                  ( neighbor(pos(X,Y), Bds, Obst, Succ),
+                    \+ member(Succ, Visited) ),
+                  Succs),
+          Succs \= [],  % fail if no successors
+          % Score successors by heuristic
+          score_successors(Succs, Goal, Scored),
+          keysort(Scored, Sorted),
+          pairs_values(Sorted, OrderedSuccs),
+          % Try successors in heuristic order
+          try_successors(OrderedSuccs, Goal, Obst, Bds, Visited, PathOut).
+      
+      % Try successors
+      try_successors([S|Ss], Goal, Obst, Bds, Vis, PathOut) :-
+          mea(S, Goal, Obst, Bds, [S|Vis], PathOut) ;
+          try_successors(Ss, Goal, Obst, Bds, Vis, PathOut).
+      try_successors([], _, _, _, _, _) :- fail.
+      
+      % Neighbor generation (N, S, E, W)
+      neighbor(pos(X,Y), (MaxX,MaxY), Obst, pos(X, Y1)) :-
+          (Y1 is Y+1 ; Y1 is Y-1),
+          within(1, MaxY, Y1),
+          \+ blocked((X,Y1), Obst).
+      neighbor(pos(X,Y), (MaxX,MaxY), Obst, pos(X1, Y)) :-
+          (X1 is X+1 ; X1 is X-1),
+          within(1, MaxX, X1),
+          \+ blocked((X1,Y), Obst).
+      
+      within(Low, High, V) :- V >= Low, V =< High.
+      
+      blocked((X,Y), Obst) :- member((X,Y), Obst).
+      
+      % Manhattan heuristic
+      h(pos(X,Y), pos(GX,GY), H) :-
+          DX is abs(X-GX),
+          DY is abs(Y-GY),
+          H is DX + DY.
+      
+      score_successors([], _, []).
+      score_successors([S|Ss], Goal, [H-S|Rest]) :-
+          h(S, Goal, H),
+          score_successors(Ss, Goal, Rest).
+      
+      % Utility: extract values from Key-Value pairs
+      pairs_values([], []).
+      pairs_values([_-V|T], [V|Vs]) :- pairs_values(T, Vs).
+---------------------------------------------------------------
+Query:
+?- solve_mea((1,1), (3,3), [(2,2)], (3,3), Path).
+Output:
+Path = [pos(1,1), pos(1,2), pos(1,3), pos(2,3), pos(3,3)].
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical 7:
+Software Required: SWI-Prolog
+Title: Solve traveling salesman problem.
+-----------------------------------------------------------
+code: 
+      /* -------- Traveling Salesman Problem in Prolog --------
+      
+      Approach: Generate all possible tours (permutations), calculate their cost,
+      and select the minimal one.
+      
+      -------------------------------------------------------- */
+      
+      :- use_module(library(clpfd)).  % For utilities like min_list/2 if needed
+      
+      % ----------------------------
+      % Distance facts: dist(City1, City2, Cost)
+      % ----------------------------
+      dist(a, b, 10).
+      dist(a, c, 15).
+      dist(a, d, 20).
+      dist(b, c, 35).
+      dist(b, d, 25).
+      dist(c, d, 30).
+      
+      % Make distance symmetric
+      distance(X, Y, D) :- dist(X, Y, D) ; dist(Y, X, D).
+      
+      % Compute cost of a given tour (list of cities, starting point repeated at end)
+      tour_cost([_], 0).
+      tour_cost([C1, C2 | Rest], Cost) :-
+          distance(C1, C2, D),
+          tour_cost([C2 | Rest], SubCost),
+          Cost is D + SubCost.
+      
+      % Solve TSP from Start City
+      tsp(Start, BestPath, MinCost) :-
+          % Get all unique cities
+          findall(C, (dist(C, _, _) ; dist(_, C, _)), CitiesDup),
+          sort(CitiesDup, Cities),
+          delete(Cities, Start, OtherCities),
+          % generate all permutations of other cities
+          findall(Perm, permutation(OtherCities, Perm), PermPaths),
+          % prepend Start and append Start to form complete tours
+          findall([Start | P], member(P, PermPaths), PathsWithStart),
+          findall(Path, (member(P, PathsWithStart), append(P, [Start], Path)), AllTours),
+          % compute cost for each tour
+          findall(Cost-Path, (member(Path, AllTours), tour_cost(Path, Cost)), CostedTours),
+          % sort by cost and pick the best one
+          keysort(CostedTours, [MinCost-BestPath | _]).
+-------------------------------------------------------------------------------------------
+✅ Query (Write This Exactly)
+?- tsp(a, Path, Cost).
+
+Expected Output:
+BestPath = [a, b, d, c, a],
+Cost = 80.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
