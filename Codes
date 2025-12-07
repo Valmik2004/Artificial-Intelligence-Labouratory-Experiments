@@ -119,7 +119,9 @@ Code:
       edge(d, f).
       edge(e, f).
       edge(f, g).
-      
+
+
+
       % DFS main predicate: find a path from Start to Goal
       dfs(Start, Goal, Path) :-
           dfs_helper(Start, Goal, [Start], Path).
