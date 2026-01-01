@@ -78,7 +78,7 @@ code:
         length(Solution, 8),
         Solution ins 1..8,          % Queens can be placed in rows 1 to 8
         safe_queens(Solution),
-        labeling([], Solution).     % Find valid solutions
+        labeling([], Solution).     % Find Valid Solutions
     
     % Check that all queens are safe
     safe_queens([]).
