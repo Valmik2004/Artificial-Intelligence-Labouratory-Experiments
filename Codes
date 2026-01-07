@@ -9,7 +9,7 @@ Codes:
       red(rose).
       own(john).
 
-| Query                   | Output                                      |
+| Query                   | output                                      |
 | ----------------------- | ------------------------------------------- |
 | `?- likes(ram, mango).` | `true.`                                     |
 | `?- likes(ram, apple).` | `false.`                                    |
