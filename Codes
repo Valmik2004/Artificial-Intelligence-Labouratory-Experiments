@@ -51,7 +51,7 @@ F = 32.
 ?- c_to_f(25, F).
 F = 77.
 ---------------------------------
-Check freezing temperature
+Check freezing temperature.
 ?- freezing(30).
 true.
 
