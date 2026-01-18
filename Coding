@@ -58,7 +58,7 @@ Demonstrate the use of map and reduce tasks
 Write a Python program to calculate the cube of each number in a list using map().
 ------------------------------------------------------------------------------------
 
-# Input list
+# Input list:
 numbers = [1, 2, 3, 4, 5]
 
 # Using map() to calculate cubes
